@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+<body class="bg-gray-100 p-6"> 
+    <h1 class="text-3xl font-bold mb-4">All Events</h1> 
+    <a href="{% url 'event_list' %}" 
+        class="bg-blue-600 text-white px-4 py-2 rounded">
+        + Add Event
+    </a>
+    <table class="w-full mt-4 bg-white shadow rounded">
+        <tr class="bg-gray-100 border-b">
+            <th class="p-3 text-left">Event name</th>
+            <th class="p-3 text-left">Category</th>
+            <th class="p-3 text-left">Participants</th> 
+            <th class="p-3 text-left">Actions</th>
+        </tr> 
+        
+        {% for event in events %}
+            <tr class="border-b hover:bg-gray-50">
+                <td class="p-3">
+                    <a href="{% url 'event_detail' event.id %}">{{event.name}}</a>
+                </td>
+            </tr> 
+            </td>
+        <td class="p-3">{{ event.category.name }}</td>
+        <td class="p-3">{{ event.total_participants }}</td>
+        <td class="p-3 text-center">
+            <a href="{% url 'event_update' event.id %}" class="text-green-600">Edit</a> |
+            <a href="{% url 'event_delete' event.id %}" class="text-red-600">Delete</a>
+        </td>
+        {% endfor %}
+    </table>
+
+</body>
+
+
+
+{% endblock %}

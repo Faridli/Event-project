@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body class="bg-gray-100 p-6">
+
+<div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Participants List</h1>
+        <a href="{% url 'participant_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded">
+            + Add Participant
+        </a>
+    </div>
+
+    <table class="w-full border">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="p-3 text-left">Name</th>
+                <th class="p-3 text-left">Email</th>
+                <th class="p-3 text-left">Events</th>
+                <th class="p-3 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in participants %}
+            <tr class="border-t hover:bg-gray-50">
+                <td class="p-3">{{ p.name }}</td>
+                <td class="p-3">{{ p.email }}</td>
+                <td class="p-3">
+                    {% for e in p.events.all %}
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm mr-1">
+                            {{ e.name }}
+                        </span>
+                    {% empty %}
+                        <span class="text-gray-400">No Events</span>
+                    {% endfor %}
+                </td>
+                <td class="p-3 text-center">
+                    <a href="{% url 'participant_update' p.id %}" class="text-green-600 mr-2">Edit</a>
+                    <a href="{% url 'participant_delete' p.id %}" class="text-red-600">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+{% endblock %}

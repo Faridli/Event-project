@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block content %} 
+
+<body class="p-6 bg-gray-100">
+
+<h1 class="text-2xl font-bold mb-4">{{ events.name }}</h1>
+
+<div class="bg-white p-6 rounded shadow mb-6">
+    <p><strong>Category:</strong> {{ events.category.name }}</p> 
+    <p><strong>Date:</strong> {{ events.date }}</p>
+    <p><strong>Time:</strong> {{ events.time }}</p>
+    <p><strong>Location:</strong> {{ events.location }}</p>
+    <p><strong>Description:</strong> {{ events.description }}</p>
+</div>
+
+<h2 class="text-xl font-semibold mb-2">Participants</h2>
+
+<ul class="bg-white rounded shadow p-4"> 
+    {% for p in events.participants.all %}
+        <li class="border-b py-2">{{ p.name }} — {{ p.email }}</li>
+    {% empty %}
+        <p class="text-gray-500">No participants registered.</p>
+    {% endfor %}
+</ul>
+
+</body>
+
+{% endblock %}

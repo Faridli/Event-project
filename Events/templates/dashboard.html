@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+ <div class="container px-4 py-6 mt-6">
+    
+            <div class="flex justify-between mb-6"> 
+             <div class="text-white bg-blue-500 font-semibold text-2xl p-6">Stats Grid</div>
+             <!-- Search Box --> 
+            <div>
+                <input 
+                 type="text" 
+                 placeholder="Search events..." 
+                 class="border border-gray-300 rounded-lg px-4 py-2 md:w-3
+                 focus:outline-none focus:ring-2 focus:ring-blue-800">
+            </div>
+            </div>
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-blue-500 text-white shadow-lg rounded-lg p-6">
+                <h2 class="text-gray-200">Total Participants</h2>
+                <p class="text-3xl font-bold">125</p>
+            </div>
+            <div class="bg-green-500 text-white shadow-lg rounded-lg p-6">
+                <h2 class="text-gray-200">Total Events</h2>
+                <p class="text-3xl font-bold">20</p>
+            </div>
+            <div class="bg-yellow-500 text-white shadow-lg rounded-lg p-6">
+                <h2 class="text-gray-200">Upcoming Events</h2>
+                <p class="text-3xl font-bold">5</p>
+            </div>
+            <div class="bg-red-500 text-white shadow-lg rounded-lg p-6">
+                <h2 class="text-gray-200">Past Events</h2>
+                <p class="text-3xl font-bold">15</p>
+            </div>
+        </div>
+
+        <!-- Today's Events Table -->
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Today's Events (06 Dec 2025)</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b">Event Name</th>
+                            <th class="py-2 px-4 border-b">Category</th>
+                            <th class="py-2 px-4 border-b">Location</th>
+                            <th class="py-2 px-4 border-b">Participants</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-2 px-4 border-b">Tech Conference</td>
+                            <td class="py-2 px-4 border-b">Technology</td>
+                            <td class="py-2 px-4 border-b">New York</td>
+                            <td class="py-2 px-4 border-b">30</td>
+                        </tr>
+                        <tr class="hover:bg-gray-100">
+                            <td class="py-2 px-4 border-b">Art Workshop</td>
+                            <td class="py-2 px-4 border-b">Art</td>
+                            <td class="py-2 px-4 border-b">San Francisco</td>
+                            <td class="py-2 px-4 border-b">20</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Interactive Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-blue-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
+                <p class="text-xl font-bold">Total Events</p>
+            </div>
+            <div class="bg-yellow-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
+                <p class="text-xl font-bold">Upcoming Events</p>
+            </div>
+            <div class="bg-red-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
+                <p class="text-xl font-bold">Past Events</p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
