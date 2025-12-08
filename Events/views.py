@@ -9,8 +9,55 @@ from .models import Event, Participant, Category
 from .forms import EventForm, ParticipantForm, CategoryForm
 
 # Create your views here.
+
 def Dashboard(request):
-    return render(request, 'dashboard.html')
+    today = timezone.now().date()
+
+    total_participants = Participant.objects.count()
+    total_events = Event.objects.count()
+
+    # Optimized aggregate query
+    participant_agg = Event.objects.aggregate(
+        total=Count('participants')
+    )
+    total_event_participants = participant_agg['total']
+
+    upcoming_events = Event.objects.filter(date__gte=today).count()   #_gte = Greater Than or Equal (>=) , today 
+    past_events = Event.objects.filter(date__lt=today).count()   #_lt = Less Than (<), today 
+
+    filter_type = request.GET.get('filter')
+    if filter_type == 'upcoming':
+        today_events = Event.objects.filter(date__gte=today)\
+            .select_related('category')\
+            .prefetch_related('participants')
+
+    elif filter_type == 'past':
+        today_events = Event.objects.filter(date__lt=today)\
+            .select_related('category')\
+            .prefetch_related('participants')
+
+    elif filter_type == 'total_events':
+        today_events = Event.objects.all()\
+            .select_related('category')\
+            .prefetch_related('participants')
+
+    else:
+        today_events = Event.objects.filter(date=today)\
+            .select_related('category')\
+            .prefetch_related('participants')
+
+    context = {
+        'total_participants': total_participants,
+        'total_event_participants': total_event_participants,
+        'total_events': total_events,
+        'upcoming_events': upcoming_events,
+        'past_events': past_events,
+        'today_events': today_events,
+        'today': today,
+    }
+    return render(request, 'dashboard.html', context)
+
+
 
 def Category_list(request):
     categories = Category.objects.all() 

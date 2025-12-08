@@ -1,84 +1,151 @@
-{% extends 'base.html' %} 
-
+{% extends 'base.html' %}
 {% block content %}
 
- <div class="container px-4 py-6 mt-6">
-    
-            <div class="flex justify-between mb-6"> 
-             <div class="text-white bg-blue-500 font-semibold text-2xl p-6">Stats Grid</div>
-             <!-- Search Box --> 
-            <div>
-                <input 
-                 type="text" 
-                 placeholder="Search events..." 
-                 class="border border-gray-300 rounded-lg px-4 py-2 md:w-3
-                 focus:outline-none focus:ring-2 focus:ring-blue-800">
-            </div>
-            </div>
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-blue-500 text-white shadow-lg rounded-lg p-6">
-                <h2 class="text-gray-200">Total Participants</h2>
-                <p class="text-3xl font-bold">125</p>
-            </div>
-            <div class="bg-green-500 text-white shadow-lg rounded-lg p-6">
-                <h2 class="text-gray-200">Total Events</h2>
-                <p class="text-3xl font-bold">20</p>
-            </div>
-            <div class="bg-yellow-500 text-white shadow-lg rounded-lg p-6">
-                <h2 class="text-gray-200">Upcoming Events</h2>
-                <p class="text-3xl font-bold">5</p>
-            </div>
-            <div class="bg-red-500 text-white shadow-lg rounded-lg p-6">
-                <h2 class="text-gray-200">Past Events</h2>
-                <p class="text-3xl font-bold">15</p>
-            </div>
-        </div>
+<div class="bg-gray-100 min-h-screen p-6">
 
-        <!-- Today's Events Table -->
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-            <h2 class="text-xl font-semibold mb-4">Today's Events (06 Dec 2025)</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border">
-                    <thead>
-                        <tr>
-                            <th class="py-2 px-4 border-b">Event Name</th>
-                            <th class="py-2 px-4 border-b">Category</th>
-                            <th class="py-2 px-4 border-b">Location</th>
-                            <th class="py-2 px-4 border-b">Participants</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-gray-100">
-                            <td class="py-2 px-4 border-b">Tech Conference</td>
-                            <td class="py-2 px-4 border-b">Technology</td>
-                            <td class="py-2 px-4 border-b">New York</td>
-                            <td class="py-2 px-4 border-b">30</td>
-                        </tr>
-                        <tr class="hover:bg-gray-100">
-                            <td class="py-2 px-4 border-b">Art Workshop</td>
-                            <td class="py-2 px-4 border-b">Art</td>
-                            <td class="py-2 px-4 border-b">San Francisco</td>
-                            <td class="py-2 px-4 border-b">20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+          <!-- Glass Search Box -->
+          <form method="GET" class="p-6 md:w-1/3 mt-4 md:mt-0 ml-auto">
+    <div class="relative flex items-center">
+        <input 
+            type="text" 
+            name="search" 
+            value="{{ request.GET.search }}"
+            placeholder="Search events..."
+            class="p-6 pl-12 rounded-2xl border-spacing-2 shadow-lg border border-amber-400
+                   bg-white/60 backdrop-blur-md focus:ring-2 
+                   focus:ring-blue-500 transition w-full"
+        >
+    </div>
+</form>
 
-        <!-- Interactive Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-blue-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
-                <p class="text-xl font-bold">Total Events</p>
-            </div>
-            <div class="bg-yellow-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
-                <p class="text-xl font-bold">Upcoming Events</p>
-            </div>
-            <div class="bg-red-500 text-white shadow-lg rounded-lg p-6 text-center cursor-pointer">
-                <p class="text-xl font-bold">Past Events</p>
-            </div>
-        </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+
+        <!-- Total Participants -->
+        <a href="?filter=total_participants" 
+           class="bg-blue-600 text-white rounded-xl p-6 shadow-xl hover:scale-105 transition transform">
+           <div class="flex items-center gap-4">
+
+                <!-- SVG Icon -->
+                <svg class="w-12 h-12 text-white/90" fill="none" stroke="currentColor" stroke-width="1.5"
+                     viewBox="0 0 24 24">
+                    <path d="M16 11a3 3 0 100-6 3 3 0 000 6z"/>
+                    <path d="M6 8a3 3 0 106 0 3 3 0 00-6 0z"/>
+                    <path d="M2 20c0-3 3-6 6-6h8c3 0 6 3 6 6"/>
+                </svg>
+
+                <div>
+                    <p class="text-3xl">Total Participants</p>
+                    <p class="text-3xl font-bold">{{ total_participants }}</p>
+                </div>
+           </div>
+        </a>
+
+        <!-- Total Events -->
+        <a href="?filter=total_events" 
+           class="bg-green-600 text-white rounded-xl p-6 shadow-xl hover:scale-105 transition transform">
+           <div class="flex items-center gap-4">
+
+                <svg class="w-12 h-12 text-white/90" fill="none" stroke="currentColor" stroke-width="1.5"
+                     viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                    <path d="M16 3v4M8 3v4M3 11h18"/>
+                </svg>
+
+                <div>
+                    <p class="text-3xl">Total Events</p>
+                    <p class="text-3xl font-bold">{{ total_events }}</p>
+                </div>
+           </div>
+        </a>
+
+        <!-- Upcoming Events -->
+        <a href="?filter=upcoming" 
+           class="bg-yellow-500 text-white rounded-xl p-6 shadow-xl hover:scale-105 transition transform">
+           <div class="flex items-center gap-4">
+
+                <svg class="w-12 h-12 text-white/90" fill="none" stroke="currentColor" stroke-width="1.5"
+                     viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 7v6l4 2"/>
+                </svg>
+
+                <div>
+                    <p class="text-3xl">Upcoming Events</p>
+                    <p class="text-3xl font-bold">{{ upcoming_events }}</p>
+                </div>
+           </div>
+        </a>
+
+        <!-- Past Events -->
+        <a href="?filter=past" 
+           class="bg-red-600 text-white rounded-xl p-6 shadow-xl hover:scale-105 transition transform">
+           <div class="flex items-center gap-4">
+
+                <svg class="w-12 h-12 text-white/90" fill="none" stroke="currentColor" stroke-width="1.5"
+                     viewBox="0 0 24 24">
+                    <path d="M3 3h18v4H3z"/>
+                    <path d="M21 7l-1 12a2 2 0 01-2 2H6a2 2 0 01-2-2L3 7"/>
+                    <path d="M10 11h4"/>
+                </svg>
+
+                <div>
+                    <p class="text-3xl">Past Events</p>
+                    <p class="text-3xl font-bold">{{ past_events }}</p>
+                </div>
+           </div>
+        </a>
 
     </div>
+
+
+    <!-- Events Table -->
+    <div class="bg-white rounded-xl shadow-xl p-6 mt-8">
+
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">
+            {% if request.GET.filter == 'upcoming' %}
+                📅 Upcoming Events
+            {% elif request.GET.filter == 'past' %}
+                📅 Past Events
+            {% elif request.GET.filter == 'total_events' %}
+                📅 All Events
+            {% else %}
+                📅 Today's Events ({{ today|date:"d M, Y" }})
+            {% endif %}
+        </h2>
+
+        {% if today_events %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 rounded-lg">
+                <thead class="bg-gray-200 text-gray-700">
+                    <tr>
+                        <th class="py-3 px-4 text-left">Event Name</th>
+                        <th class="py-3 px-4 text-left">Category</th>
+                        <th class="py-3 px-4 text-left">Location</th>
+                        <th class="py-3 px-4 text-left">Participants</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    {% for event in today_events %}
+                    <tr class="hover:bg-blue-50 transition">
+                        <td class="py-3 px-4">{{ event.name }}</td>
+                        <td class="py-3 px-4">{{ event.category.name }}</td>
+                        <td class="py-3 px-4">{{ event.location }}</td>
+                        <td class="py-3 px-4">{{ event.participants.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+            <p class="text-gray-500 text-center py-6">No events found.</p>
+        {% endif %}
+
+    </div>
+
+</div>
 
 {% endblock %}
