@@ -44,7 +44,7 @@ urlpatterns = [
        # ...Participants...
        #................... 
        path('participant/', Participant_list, name='participant_list'),
-       path('participant/create', Participant_create, name='participant_create'),
+       path('participant/create/', Participant_create, name='participant_create'),
        path('participant/update/<int:id>/edit/', Participant_update, name='participant_update'),
        path('participant/delete/<int:id>/delete/', Participant_delete, name='participant_delete'),
       

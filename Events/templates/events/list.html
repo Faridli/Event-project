@@ -2,7 +2,7 @@
 {% block content %}
 
 <body class="bg-gray-100 p-6 mt-8"> 
-    <h1 class="text-3xl font-bold mb-4">All Events</h1> 
+    <h1 class="text-3xl font-bold mb-4">Events Detail</h1> 
 
     <a href="{% url 'event_create' %}" 
         class="bg-blue-600 text-white px-4 py-2 rounded">
@@ -10,7 +10,7 @@
     </a>
 
     <table class="w-full mt-4 bg-white shadow rounded">
-        <tr class="bg-amber-300 text-3xl border-b">
+        <tr class="bg-green-400 text-3xl border-b">
             <th class="p-3 text-left">Event name</th>
             <th class="p-3 text-left">Category</th>
             <th class="p-3 text-left">Participants</th> 
@@ -19,7 +19,7 @@
         </tr> 
         
         {% for event in events %}
-        <tr class="border-b hover:bg-gray-50">
+        <tr class="border-b text-2xl hover:bg-gray-50">
             <td class="p-3">
                 <a href="{% url 'event_detail' event.id %}">
                     {{ event.name }}
@@ -28,13 +28,13 @@
 
             <td class="p-3">{{ event.category.name }}</td>
 
-            <td class="p-3">{{ event.total_participants }}</td>
+            <td class="p-3">{{ event.participants.all|length }}</td>
 
-            <td class="p-3 text-center">
+            <td class="p-3 text-start">
                 <a href="{% url 'event_update' event.id %}" class="text-green-600">Edit</a> 
                
             </td>
-            <td class="p-3 text-center">
+            <td class="p-3 text-start">
                <a href="{% url 'event_delete' event.id %}" class="text-red-600">Delete</a>
             </td>
         </tr>

@@ -193,11 +193,13 @@ def Participant_create(request):
     if request.method == 'POST':
         form = ParticipantForm(request.POST)
         if form.is_valid():
-            form.save()
+            participant = form.save(commit=False)  # instance save কিন্তু M2M এখনো না
+            participant.save()                     # instance DB-তে save
+            form.save_m2m()                        # ManyToMany (events) save
             return redirect('participant_list')
     else:
         form = ParticipantForm()
-    return render(request, 'participants/create.html', {'form': form}) 
+    return render(request, 'participants/create.html', {'form': form})
 
 
 def Participant_update(request, id):

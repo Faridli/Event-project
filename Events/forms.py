@@ -7,9 +7,15 @@ class CategoryForm(forms.ModelForm):
         fields = ['name', 'description']
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-input'}),
-            'description': forms.Textarea(attrs={'class': 'form-textarea'}),
+            'name': forms.TextInput(attrs={
+                'class': 'w-full p-2 rounded border border-blue-400 bg-blue-100 text-black focus:outline-none focus:ring-2 focus:ring-blue-500'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'w-full p-2 rounded border border-green-400 bg-green-100 text-black focus:outline-none focus:ring-2 focus:ring-green-500',
+                'rows': 4
+            }),
         }
+
 
 
 class EventForm(forms.ModelForm):
@@ -30,11 +36,20 @@ class EventForm(forms.ModelForm):
 class ParticipantForm(forms.ModelForm):
     class Meta:
         model = Participant
-        fields = ['name', 'email']
+        fields = ['name', 'email', 'events']
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-input'}),
-            'email': forms.EmailInput(attrs={'class': 'form-input'}),
+            'name': forms.TextInput(attrs={
+                'class': 'w-3/4 form-input bg-blue-100 text-black border-blue-400'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-3/4 form-input bg-blue-100 text-black border-blue-400'
+            }),
+            'events': forms.SelectMultiple(attrs={
+                'class': 'w-3/4 form-input bg-blue-100 text-black border-blue-400'
+            }),
+            
         }
+
 
 
