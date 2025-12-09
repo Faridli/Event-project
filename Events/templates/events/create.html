@@ -1,15 +1,68 @@
-
 {% extends 'base.html' %}
-{% block content %}  
+{% load widget_tweaks %}
 
-<body class="gb-gray-50 p-6 mt-8"> 
-    <h2 class="text-2xl font-semibold mb-4">Event Form</h2> 
-    <form method="POST" class="bg-white p-6 rounded shadow max-w-xl">
-        {% csrf_token %} 
-        {{form.as_p}} 
+{% block content %}
 
-        <button class="bg-green-600 text-white px-4 py-2 rounded mt-3">Save</button>
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-gray-50 rounded-lg shadow">
+    <h2 class="text-3xl font-bold mb-6 text-gray-700">Event Form</h2>
+
+    <form method="POST" class="space-y-5 bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+
+        <!-- Name -->
+        <div class="flex items-center space-x-4">
+            <label class="block text-gray-700 font-semibold mb-1" for="id_name">EventName</label>
+            {{ form.name|add_class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+            {% if form.name.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Description -->
+        <div class="flex items-center space-x-4">
+            <label class="block text-gray-700 font-semibold mb-1" for="id_description">Description</label>
+            {{ form.description|add_class:"w-full border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+            {% if form.description.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.description.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Date and Time -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex items-center space-x-4">
+                <label class="block text-gray-700 font-semibold mb-1" for="id_date">Date</label>
+                {{ form.date|add_class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+            </div>
+            <div class="flex items-center space-x-4">
+                <label class="block text-gray-700 font-semibold mb-1" for="id_time">Time</label>
+                {{ form.time|add_class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+            </div>
+        </div>
+
+        <!-- Location -->
+        <div class="flex items-center space-x-4">
+            <label class="block text-gray-700 text-2xl font-semibold mb-1" for="id_location">Location</label>
+            {{ form.location|add_class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+        </div>
+
+        <!-- Category -->
+        <div class="flex items-center space-x-4">
+            <label class="block text-gray-700 text-2xl font-semibold mb-1" for="id_category">Category</label>
+            {{ form.category|add_class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+        </div>
+
+        <!-- Participants (ManyToMany) -->
+        <div class="flex items-center space-x-4">
+            <label class="block text-gray-700 text-2xl font-semibold mb-1" for="id_participants">Participants</label>
+            {{ form.participants|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" }}
+        </div>
+
+        <div class="pt-4">
+            <button type="submit" class="bg-blue-600 text-2xl hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                Save 
+            </button>
+        </div>
     </form>
-    
-</body>
+</div>
+
 {% endblock %}

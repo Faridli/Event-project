@@ -23,7 +23,7 @@ class EventForm(forms.ModelForm):
             'date': forms.DateInput(attrs={'type': 'date', 'class': 'form-input'}),
             'time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-input'}),
             'location': forms.TextInput(attrs={'class': 'form-input'}),
-            'category': forms.Select(attrs={'class': 'form-select'}),
+            'category': forms.Select(attrs={'class': 'form-input'}),
         }
 
 

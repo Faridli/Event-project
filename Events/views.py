@@ -104,13 +104,38 @@ def Category_delete(request, id):
 #...................
 
 def Event_list(request):
-    events = (
-        Event.objects.select_related("category")
-        .prefetch_related("participants") 
-        .aggregate(total_participant=Count("participants")) 
-    ) 
+    search = request.GET.get("search", "")
 
-    return render(request, 'events/list.html',{"events":events}) 
+    events = Event.objects.select_related("category").prefetch_related("participants")
+
+    # Search Feature
+    if search:
+        events = events.filter(
+            Q(name__icontains=search) |
+            Q(location__icontains=search)
+        )
+
+    # Category Filter Feature
+    category_filter = request.GET.get("category")
+    if category_filter:
+        events = events.filter(category__id=category_filter)
+
+    # Date Range Filter
+    start = request.GET.get("start")
+    end = request.GET.get("end")
+    if start and end:
+        events = events.filter(date__range=[start, end])
+
+    # Total participant count
+    total_participants = Event.objects.aggregate(
+        total=Count("participants")
+    )["total"]
+
+    return render(request, "events/list.html", {
+        "events": events,
+        "total_participants": total_participants,
+    })
+ 
 
 def Event_detail(request, id):
     events = ( Event.objects.select_related("category")
@@ -122,7 +147,7 @@ def Event_detail(request, id):
 
 
 def Event_create(request):
-    form = EventForm.objects.all()
+    # form = EventForm.objects.all()
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
@@ -130,13 +155,12 @@ def Event_create(request):
             return redirect("event_list") 
     else:
         form = EventForm() 
-    return render(request, "events/create.html",{{"form":form}})
+    return render(request, "events/create.html",{"form":form})
 
 
 def Event_update(request, id): 
     event = Event.objects.get(id=id)
-    form = EventForm.objects.all() 
-
+   
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
@@ -144,7 +168,7 @@ def Event_update(request, id):
             return redirect("event_list") 
     else:
         form = EventForm(instance=event) 
-    return render(request, "events/create.html",{{"form":form}})  
+    return render(request, "events/create.html",{"form":form})  
 
 
 def Event_delete(request, id): 
@@ -154,7 +178,7 @@ def Event_delete(request, id):
         event.delete() 
         return redirect("event_list") 
      
-    return render(request, "events/create.html",{{"event":event}})  
+    return render(request, "events/create.html",{"event":event})  
 
 #...................
 # ..Participants....
